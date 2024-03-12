@@ -18,7 +18,6 @@ namespace RecipeAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RecipeDTO>> GetRecipe(int id)
         {
-            //if there are no recipes return not found
             var recipe = await _repository.GetRecipeById(id);
             if (recipe == null)
             {
@@ -29,7 +28,6 @@ namespace RecipeAPI.Controllers
 
 
         // POST: api/Recipes
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Recipe>> PostRecipe(Recipe recipe)
         {
@@ -39,21 +37,17 @@ namespace RecipeAPI.Controllers
             return result;
         }
         // PUT: api/Recipes/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRecipe(Recipe recipe)
         {
-            //make sure we have a recipe to update or return not found
             if (await _repository.GetRecipeById(recipe.RecipeId) == null)
             {
                 return NotFound();
             }
 
-            //update and save recipe
             await _repository.UpdateRecipe(recipe);
             await _repository.Save();
 
-            //returns status code of 204 to let us know that the update was successful
             return NoContent();
         }
         // DELETE: api/Recipes/5
